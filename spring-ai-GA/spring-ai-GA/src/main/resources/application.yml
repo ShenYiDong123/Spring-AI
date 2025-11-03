@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: spring-ai-GA
+  ai:
+    mcp:
+      client:
+        enabled: true
+        name: my-mcp-client
+        version: 1.0.0
+        request-timeout: 30s
+        type: ASYNC  # or SYNC
+        sse:
+          connections:
+            server1:
+              url: http://127.0.0.1:8088
+    deepseek:
+      base-url: https://api.deepseek.com/v1
+      api-key: sk-944a55346b8c4f1383b6280cf3b1bf33
+      chat:
+        options:
+          model: deepseek-chat # or deepseek-reasoner
+          #temperature: 0.8
+          #max-tokens: 20
+
+logging:
+  level:
+    org:
+      springframework:
+        ai:
+          chat:
+            client:
+              advisor: INFO # ?????? DEBUG ??????
