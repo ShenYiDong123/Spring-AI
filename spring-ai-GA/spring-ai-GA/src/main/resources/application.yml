@@ -1,6 +1,12 @@
 spring:
   application:
     name: spring-ai-GA
+  elasticsearch:
+    uris: http://127.0.0.1:9200  # ES 连接地址
+    username: elastic
+    password: 123456
+    connection-timeout: 10s
+    socket-timeout: 30s
   ai:
     mcp:
       client:
@@ -9,10 +15,10 @@ spring:
         version: 1.0.0
         request-timeout: 30s
         type: ASYNC  # or SYNC
-        sse:
-          connections:
-            server1:
-              url: http://127.0.0.1:8088
+        #sse:
+          #connections:
+            #server1:
+              #url: http://127.0.0.1:8088
     deepseek:
       base-url: https://api.deepseek.com/v1
       api-key: sk-944a55346b8c4f1383b6280cf3b1bf33
@@ -21,6 +27,16 @@ spring:
           model: deepseek-chat # or deepseek-reasoner
           #temperature: 0.8
           #max-tokens: 20
+      embedding:
+        embeddings-path: /embeddings  # DeepSeek嵌入接口路径（与OpenAI一致）
+        options:
+          model: deepseek-embed  # DeepSeek嵌入模型名称（如deepseek-embed，需确认官网模型列表）
+          dimensions: 768  # 嵌入向量维度（根据模型实际参数填写，如deepseek-embed通常为768
+    vectorstore:
+      elasticsearch:
+        index-name: rag-index     # 索引名称
+        dimensions: 768         # 必须与上面Embedding模型的dimensions一致
+        initialize-schema: true   # 自动创建索引
 
 logging:
   level:
@@ -29,4 +45,4 @@ logging:
         ai:
           chat:
             client:
-              advisor: INFO # ?????? DEBUG ??????
+              advisor: INFO # DEBUG
